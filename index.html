@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Конструктор промтов для учителя искусства</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 Конструктор промтов</h1>
+            <p>Создайте идеальный запрос для нейросети за 2 минуты</p>
+        </header>
+
+        <!-- ШАГ 1: Выбор класса и темы -->
+        <section class="step active" id="step1">
+            <h2>1. Выберите класс и тему</h2>
+            
+            <div class="class-selector">
+                <h3>Класс:</h3>
+                <div class="drums-container">
+                    <div class="drum" data-grade="5">V</div>
+                    <div class="drum" data-grade="6">VI</div>
+                    <div class="drum" data-grade="7">VII</div>
+                    <div class="drum" data-grade="8">VIII</div>
+                    <div class="drum" data-grade="9">IX</div>
+                </div>
+            </div>
+
+            <div class="topic-input">
+                <h3>Тема урока:</h3>
+                <textarea 
+                    id="topicText" 
+                    placeholder="Введите тему урока... Например: 'Барокко в архитектуре Европы' или 'Творчество Леонардо да Винчи'"
+                    rows="3"
+                ></textarea>
+                <div class="topic-examples">
+                    <strong>Примеры тем:</strong>
+                    <div class="examples-list">
+                        <span>• Сравнение импрессионизма и постимпрессионизма</span>
+                        <span>• Архитектура Древнего Египта</span>
+                        <span>• Образ матери в русской живописи</span>
+                        <span>• Символика цвета в иконописи</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ШАГ 2: Настройка формата -->
+        <section class="step" id="step2">
+            <h2>2. Настройте детали</h2>
+
+            <div class="detail-slider">
+                <h3>Уровень детализации:</h3>
+                <div class="slider-container">
+                    <span>Основные понятия</span>
+                    <input type="range" id="detailSlider" min="1" max="3" value="2">
+                    <span>Подробный разбор</span>
+                </div>
+                <div class="slider-labels">
+                    <span>Базовые тезисы</span>
+                    <span>+ примеры</span>
+                    <span>+ даты, имена, факты</span>
+                </div>
+            </div>
+
+            <div class="format-selector">
+                <h3>Формат результата:</h3>
+                <div class="format-buttons">
+                    <button class="format-btn" data-format="mindmap">
+                        <div class="format-icon">🌳</div>
+                        <div class="format-text">
+                            <strong>Структурная схема</strong>
+                            <small>Идеально для ментальных карт</small>
+                        </div>
+                    </button>
+                    <button class="format-btn" data-format="table">
+                        <div class="format-icon">📊</div>
+                        <div class="format-text">
+                            <strong>Сравнительная таблица</strong>
+                            <small>Для анализа и сравнения</small>
+                        </div>
+                    </button>
+                    <button class="format-btn" data-format="timeline">
+                        <div class="format-icon">📅</div>
+                        <div class="format-text">
+                            <strong>Хронология</strong>
+                            <small>Для исторических тем</small>
+                        </div>
+                    </button>
+                    <button class="format-btn" data-format="cards">
+                        <div class="format-icon">🎴</div>
+                        <div class="format-text">
+                            <strong>Ключевые тезисы</strong>
+                            <small>Для конспектов и шпаргалок</small>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ШАГ 3: Результат -->
+        <section class="step" id="step3">
+            <h2>3. Ваш промт готов!</h2>
+            
+            <div class="selected-topic">
+                <strong>Тема:</strong> <span id="currentTopic"></span>
+            </div>
+            
+            <div class="result-container">
+                <div class="prompt-frame">
+                    <div id="prompt-output"></div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="copyBtn">
+                        <span>📋</span>
+                        Скопировать промт
+                    </button>
+                    <button id="newPromptBtn">
+                        <span>🔄</span>
+                        Создать новый
+                    </button>
+                    <button id="surpriseBtn">
+                        <span>🎲</span>
+                        Случайные настройки
+                    </button>
+                </div>
+
+                <div class="next-steps">
+                    <h4>Что делать дальше?</h4>
+                    <ol>
+                        <li>Скопируйте промт выше</li>
+                        <li>Перейдите в <a href="https://app.amymind.com" target="_blank">AmyMind</a> или <a href="https://napkin.ai" target="_blank">Napkin AI</a></li>
+                        <li>Вставьте промт в поле ввода</li>
+                        <li>Получите готовую карту за 20 секунд!</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- Прогресс-бар -->
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+
+        <!-- Кнопки навигации -->
+        <div class="navigation">
+            <button id="prevBtn" disabled>← Назад</button>
+            <button id="nextBtn">Далее →</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

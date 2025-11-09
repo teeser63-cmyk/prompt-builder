@@ -47,6 +47,47 @@ function initEventListeners() {
             if (currentStep === 1) nextStep();
         }
     });
+
+    // Слушатель изменения текста темы
+    document.getElementById('topicText').addEventListener('input', checkNextButton);
+    
+    // Инициализация модального окна "О проекте"
+    initAboutModal();
+}
+
+// Функция для модального окна "О проекте"
+function initAboutModal() {
+    const modal = document.getElementById('aboutModal');
+    const btn = document.getElementById('aboutBtn');
+    const span = document.getElementsByClassName('close')[0];
+
+    // Открытие модального окна
+    btn.onclick = function() {
+        modal.style.display = "block";
+        document.body.style.overflow = "hidden";
+    }
+
+    // Закрытие по крестику
+    span.onclick = function() {
+        modal.style.display = "none";
+        document.body.style.overflow = "auto";
+    }
+
+    // Закрытие по клику вне окна
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+    }
+
+    // Закрытие по Escape
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && modal.style.display === "block") {
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+    });
 }
 
 // Выбор класса
@@ -233,112 +274,4 @@ function typewriterEffect(text, element) {
     type();
 }
 
-// Случайный промт
-function generateSurprise() {
-    // Случайный класс
-    const grades = ['5', '6', '7', '8', '9'];
-    const randomGrade = grades[Math.floor(Math.random() * grades.length)];
-    
-    // Случайные темы
-    const randomTopics = [
-        "Искусство эпохи Возрождения в Италии",
-        "Сравнение барокко и классицизма", 
-        "Творчество русских художников-передвижников",
-        "Символика в древнерусской иконописи",
-        "Архитектура Древнего Египта: пирамиды и храмы",
-        "Импрессионизм: техника и основные представители",
-        "Авангард в искусстве XX века",
-        "Народные промыслы России"
-    ];
-    const randomTopic = randomTopics[Math.floor(Math.random() * randomTopics.length)];
-    
-    // Случайный формат и детализация
-    const formats = ['mindmap', 'table', 'timeline', 'cards'];
-    const randomFormat = formats[Math.floor(Math.random() * formats.length)];
-    const randomDetail = Math.floor(Math.random() * 3) + 1;
-    
-    // Устанавливаем значения
-    selectedGrade = randomGrade;
-    selectedFormat = randomFormat;
-    detailLevel = randomDetail;
-    
-    // Обновляем UI
-    document.querySelector(`.drum[data-grade="${randomGrade}"]`).click();
-    document.getElementById('topicText').value = randomTopic;
-    document.querySelector(`.format-btn[data-format="${randomFormat}"]`).click();
-    document.getElementById('detailSlider').value = randomDetail;
-    updateSliderLabels();
-    
-    // Генерируем промт
-    if (currentStep === 3) {
-        generatePrompt();
-    }
-}
-
-// Копирование промта
-function copyPrompt() {
-    const promptText = document.getElementById('prompt-output').textContent;
-    
-    if (!promptText) {
-        alert('Сначала сгенерируйте промт');
-        return;
-    }
-    
-    navigator.clipboard.writeText(promptText).then(() => {
-        const btn = document.getElementById('copyBtn');
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '<span>✅</span> Скопировано!';
-        btn.style.background = '#228b22';
-        
-        setTimeout(() => {
-            btn.innerHTML = originalText;
-            btn.style.background = '#2e8b57';
-        }, 2000);
-    }).catch(err => {
-        // Fallback для старых браузеров
-        const textArea = document.createElement('textarea');
-        textArea.value = promptText;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        
-        const btn = document.getElementById('copyBtn');
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '<span>✅</span> Скопировано!';
-        btn.style.background = '#228b22';
-        
-        setTimeout(() => {
-            btn.innerHTML = originalText;
-            btn.style.background = '#2e8b57';
-        }, 2000);
-    });
-}
-
-// Сброс
-function resetAll() {
-    currentStep = 1;
-    selectedGrade = null;
-    selectedFormat = 'mindmap';
-    detailLevel = 2;
-    
-    document.querySelectorAll('.step').forEach(step => {
-        step.classList.remove('active');
-    });
-    document.getElementById('step1').classList.add('active');
-    
-    document.querySelectorAll('.drum, .format-btn').forEach(el => {
-        el.classList.remove('active');
-    });
-    
-    document.getElementById('topicText').value = '';
-    document.getElementById('detailSlider').value = 2;
-    document.getElementById('prompt-output').textContent = '';
-    document.getElementById('currentTopic').textContent = '';
-    
-    updateProgressBar();
-    updateNavigation();
-}
-
-// Слушатель изменения текста темы
-document.getElementById('topicText').addEventListener('input', checkNextButton);
+// Случай
